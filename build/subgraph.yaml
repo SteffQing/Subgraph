@@ -1,8 +1,7 @@
 specVersion: 0.0.4
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
-  #### All ERC721 ####
   - kind: ethereum/contract
     name: IERC721
     network: mumbai
@@ -19,17 +18,15 @@ dataSources:
         - account
       abis:
         - name: IERC721
-          file: ./node_modules/@openzeppelin/contracts/build/contracts/IERC721.json
+          file: IERC721\node_modules\@openzeppelin\contracts\build\contracts\IERC721.json
         - name: IERC721Metadata
-          file: ./node_modules/@openzeppelin/contracts/build/contracts/IERC721Metadata.json
+          file: IERC721\node_modules\@openzeppelin\contracts\build\contracts\IERC721Metadata.json
         - name: Contract721
-          file: ./abis/Contract721.json
+          file: IERC721\abis\Contract721.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/eip721/index.ts
-
-    #### WETH Contact ####
+      file: IERC721\IERC721.wasm
   - kind: ethereum/contract
     name: DAZ
     network: mumbai
@@ -45,12 +42,11 @@ dataSources:
         - wethTransaction
       abis:
         - name: ERC20Abi
-          file: ./abis/ERC20ABI.json
+          file: DAZ\abis\ERC20ABI.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/utils/wethUtil.ts
-    #### Marketplace Contracts ####
+      file: DAZ\DAZ.wasm
   - kind: ethereum
     name: Contract
     network: mumbai
@@ -68,10 +64,10 @@ dataSources:
         - sale
       abis:
         - name: Contract
-          file: ./abis/Contract.json
+          file: Contract\abis\Contract.json
         - name: ERC20
-          file: ./node_modules/@openzeppelin/contracts/build/contracts/ERC20.json
+          file: Contract\node_modules\@openzeppelin\contracts\build\contracts\ERC20.json
       eventHandlers:
         - event: ItemListed(indexed address,indexed uint32,indexed uint256)
           handler: handleItemSale
-      file: ./src/marketplaces/mARTMapping.ts
+      file: Contract\Contract.wasm
