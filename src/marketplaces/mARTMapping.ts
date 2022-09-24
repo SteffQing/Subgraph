@@ -6,7 +6,7 @@ import {
   ItemSold,
 } from '../../generated/Contract/Contract'
 
-import { ERC20Contracts } from "../graphprotocol-utils";
+import { constants, ERC20Contracts } from "../graphprotocol-utils";
 
 import { BigDecimal, Address } from "@graphprotocol/graph-ts";
 
@@ -22,9 +22,13 @@ export function handleItemSale(event: ItemSold): void {
 
     if (!saleEntity && tx.unmatchedTransferCount > 0) {
       // Assume default value of currency as phony ERC20
-      let currencyAddress: Address = Address.fromString("0xf75150d730ce97c1551e97df39c0a049024e4c25"); //update to unknown ERC20
+      let currencyAddress: Address = Address.fromString("0xf75150d730ce97c1551e97df39c0a049024e4c25"); //update to DAZ/WETH ERC20
 
-      let currencyEntity = ERC20Contracts.getERC20(currencyAddress);
+      // If the transaction value is > 0 then assume the sale occurs in ETH
+      if (event.transaction.value != constants.BIGINT_ZERO || event.params.price == constants.BIGINT_ONE) {currencyAddress = Address.fromString(constants.ADDRESS_ZERO)}
+
+      ERC20Contracts.getERC20(currencyAddress)
+      let currencyEntity = currency.load(currencyAddress.toHexString())
 
       if (currencyEntity) {
         //4. Assign currency address, amount, txId and platform to sale entity

@@ -41,7 +41,7 @@ export namespace transactions {
 }
 
 export namespace ERC20Contracts {
-  export function getERC20(address: Address): currency {
+  export function getERC20(address: Address): void {
     let currencyEntity = currency.load(address.toHexString());
 
     //if currency does not exists attempt to load ERC20 (on failure assume ETH)
@@ -49,12 +49,12 @@ export namespace ERC20Contracts {
       let ERC20Var = ERC20.bind(address);
       let try_name = ERC20Var.try_name();
       let try_symbol = ERC20Var.try_symbol();
-      let try_deicmals = ERC20Var.try_decimals();
+      let try_decimals = ERC20Var.try_decimals();
 
       currencyEntity = new currency(address.toHexString());
       currencyEntity.name = try_name.reverted ? "Ether" : try_name.value;
       currencyEntity.symbol = try_symbol.reverted ? "ETH" : try_symbol.value;
-      currencyEntity.decimals = try_deicmals.reverted ? 18 : try_deicmals.value;
+      currencyEntity.decimals = try_decimals.reverted ? 18 : try_decimals.value;
       currencyEntity.save();
     }
 
@@ -62,15 +62,15 @@ export namespace ERC20Contracts {
       let ERC20Var = ERC20.bind(address);
       let try_name = ERC20Var.try_name();
       let try_symbol = ERC20Var.try_symbol();
-      let try_deicmals = ERC20Var.try_decimals();
+      let try_decimals = ERC20Var.try_decimals();
 
       currencyEntity = new currency(address.toHexString());
       currencyEntity.name = try_name.reverted ? "ERC20" : try_name.value;
       currencyEntity.symbol = try_symbol.reverted ? "ERC20" : try_symbol.value;
-      currencyEntity.decimals = try_deicmals.reverted ? 18 : try_deicmals.value;
+      currencyEntity.decimals = try_decimals.reverted ? 18 : try_decimals.value;
       currencyEntity.save();
     }
 
-    return currencyEntity as currency;
+    // return currencyEntity as currency;
   }
 }

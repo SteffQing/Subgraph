@@ -37,7 +37,7 @@ export function MatchTransferWithSale(
           transferEntity.save()
           transactionEntity.save()
 
-          if (CurrencySymbol == 'ETH' || CurrencySymbol == 'WETH') {
+          if (CurrencySymbol == 'DAZ' || CurrencySymbol == 'WETH') {
 
             // Update collection metrics
             let collectionEntity = collection.load(transferEntity.collection)

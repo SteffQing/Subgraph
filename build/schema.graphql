@@ -153,7 +153,7 @@ type transfer @entity {
   " Block Number "
   blockNumber: Int!
 
-  " The amount of ETH paid"
+  " The amount of ETH/DAZ paid"
   amount: BigDecimal!
 
   " matched sale event for the transfer "
