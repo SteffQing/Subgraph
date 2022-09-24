@@ -28,28 +28,6 @@ dataSources:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
       file: ./src/eip721/index.ts
-
-    #### WETH Contact ####
-  - kind: ethereum/contract
-    name: DAZ
-    network: mumbai
-    source:
-      address: "0xf75150d730CE97C1551e97df39c0A049024e4C25"
-      abi: ERC20Abi
-      startBlock: 28217454
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      entities:
-        - wethTransaction
-      abis:
-        - name: ERC20Abi
-          file: ./abis/ERC20ABI.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/utils/wethUtil.ts
     #### Marketplace Contracts ####
   - kind: ethereum
     name: Contract
@@ -72,6 +50,6 @@ dataSources:
         - name: ERC20
           file: ./node_modules/@openzeppelin/contracts/build/contracts/ERC20.json
       eventHandlers:
-        - event: ItemListed(indexed address,indexed uint32,indexed uint256)
-          handler: handleItemSale
+        - event: ItemSold(indexed address,indexed address,indexed uint32,uint256)
+          handler: handleItemSold
       file: ./src/marketplaces/mARTMapping.ts
