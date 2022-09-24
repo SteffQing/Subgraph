@@ -10,7 +10,7 @@ import {
 } from "../utils/matchTransferSale"
 
 import {
-  ItemListed,
+  ItemSold,
 } from '../../generated/Contract/Contract'
 
 import {
@@ -22,7 +22,7 @@ import {
 } from "@graphprotocol/graph-ts"
 
 // TakerAsk Handler starts here
-export function handleItemSale(event: ItemListed): void {
+export function handleItemSale(event: ItemSold): void {
   
   //1. load transaction
   let tx = transaction.load(event.transaction.hash.toHexString())
