@@ -8,7 +8,7 @@ import {
 
 import { constants, ERC20Contracts } from "../graphprotocol-utils";
 
-import { BigDecimal, Address } from "@graphprotocol/graph-ts";
+import { BigDecimal, Address, log } from "@graphprotocol/graph-ts";
 
 // TakerAsk Handler starts here
 export function handleItemSale(event: ItemSold): void {
@@ -44,7 +44,7 @@ export function handleItemSale(event: ItemSold): void {
         //5. Assign sale.amount / transaction.unmatchedTransferCount to variable transferAmount to pass into transfer entities
         // This will derives the amount per transfer (eg each nft's amount in a bundle with 2 NFT's is the total price divided by 2.)
         let transferAmount = saleEntity.amount.div(BigDecimal.fromString(tx.unmatchedTransferCount.toString()));
-
+        log.warning("Transfers: {}, Amount: {}, Hash: {}, SaleID: {}, Currency: {}", [tx.transfers.toString(), transferAmount.toString(), tx.id, saleEntity.id, currencyEntity.symbol])
         //6. Using unmatchedTransferId loop through the transfer entities and apply the transferAmount and assign saleId ,
         //reducing the unmatchedTransferCount by 1. save transfer update on each loop.
         if (tx.transfers && transferAmount && tx.id && saleEntity.id) {

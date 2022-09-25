@@ -1,6 +1,6 @@
 import { Bytes } from "@graphprotocol/graph-ts";
 import { Address } from "@graphprotocol/graph-ts";
-import { BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { BigDecimal, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 
 import { ERC20 } from "../generated/IERC721/ERC20";
 
