@@ -1,4 +1,4 @@
-import { BigDecimal } from "@graphprotocol/graph-ts"
+import { BigDecimal, log } from "@graphprotocol/graph-ts"
 import {constants} from '../../src/graphprotocol-utils'
 
 import { 
@@ -11,6 +11,7 @@ import {
 } from "../../generated/schema"
 
 
+
 export function MatchTransferWithSale(
   TransferId: string,
   transferAmount: BigDecimal,
@@ -18,6 +19,7 @@ export function MatchTransferWithSale(
   SaleId: string,
   CurrencySymbol: string,
   ): void {
+    log.warning("MatchTransferWithSale: TransferId: {}, transferAmount: {}, TransactionId: {}, SaleId: {}, CurrencySymbol: {}", [TransferId, transferAmount.toString(), TransactionId, SaleId, CurrencySymbol])
     
      if (TransferId && transferAmount && TransactionId && SaleId) {
        
@@ -37,7 +39,7 @@ export function MatchTransferWithSale(
           transferEntity.save()
           transactionEntity.save()
 
-          if (CurrencySymbol == 'DAZ' || CurrencySymbol == 'WETH') {
+          if (CurrencySymbol == 'DAZ') {
 
             // Update collection metrics
             let collectionEntity = collection.load(transferEntity.collection)
@@ -68,6 +70,7 @@ export function MatchTransferWithSale(
                 hourlyCollectionSnapshotEntity.collection         = transferEntity.collection
                 hourlyCollectionSnapshotEntity.hourlyVolume        = constants.BIGDECIMAL_ZERO
                 hourlyCollectionSnapshotEntity.hourlyTransactions  = 0
+                hourlyCollectionSnapshotEntity.hourlyAvgSale       = constants.BIGDECIMAL_ZERO
                 hourlyCollectionSnapshotEntity.topSale            = constants.BIGDECIMAL_ZERO
                 hourlyCollectionSnapshotEntity.bottomSale         = constants.BIGDECIMAL_ZERO
 
@@ -110,6 +113,7 @@ export function MatchTransferWithSale(
                 dailyCollectionSnapshotEntity.timestamp          = day * 86400
                 dailyCollectionSnapshotEntity.collection         = transferEntity.collection
                 dailyCollectionSnapshotEntity.dailyVolume        = constants.BIGDECIMAL_ZERO
+                dailyCollectionSnapshotEntity.dailyAvgSale       = constants.BIGDECIMAL_ZERO
                 dailyCollectionSnapshotEntity.dailyTransactions  = 0
                 dailyCollectionSnapshotEntity.topSale            = constants.BIGDECIMAL_ZERO
                 dailyCollectionSnapshotEntity.bottomSale         = constants.BIGDECIMAL_ZERO
