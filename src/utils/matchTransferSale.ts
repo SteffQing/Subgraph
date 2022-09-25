@@ -158,6 +158,7 @@ export function MatchTransferWithSale(
                   weeklyCollectionSnapshotEntity.collection          = transferEntity.collection
                   weeklyCollectionSnapshotEntity.weeklyVolume        = constants.BIGDECIMAL_ZERO
                   weeklyCollectionSnapshotEntity.weeklyTransactions  = 0
+                  weeklyCollectionSnapshotEntity.weeklyAvgSale       = constants.BIGDECIMAL_ZERO
                   weeklyCollectionSnapshotEntity.topSale             = constants.BIGDECIMAL_ZERO
                   weeklyCollectionSnapshotEntity.bottomSale          = constants.BIGDECIMAL_ZERO
 
